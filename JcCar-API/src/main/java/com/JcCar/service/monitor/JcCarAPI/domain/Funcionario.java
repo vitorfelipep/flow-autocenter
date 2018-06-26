@@ -60,8 +60,8 @@ public class Funcionario implements Serializable {
 	private List<Especialidade> especialidades;
 	
 	@NotNull
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_funcao")
+	@OneToOne
+	@JoinColumn(name = "id_funcao", referencedColumnName="id")
 	private Funcao funcao;
 
 }
