@@ -6,6 +6,7 @@ package com.JcCar.service.monitor.JcCarAPI.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.JcCar.service.monitor.JcCarAPI.service.exception.FuncionarioExistente
  */
 
 @Service
+@Transactional
 public class FuncionarioService {
 	
 	@Autowired
