@@ -1,0 +1,48 @@
+h4 {
+  padding: 8px 0 0 10px;
+  margin-bottom: 0;
+}
+
+.setting-sidebar {
+  width: 300px;
+  height: 100%;
+  border: 0 solid transparent;
+  background: #FFF;
+  color: #333;
+  box-shadow: none;
+}
+
+.setting-sidebar>.area {
+  padding: 0 4px;
+}
+
+.ui.card>.content>.header:not(.ui),
+.ui.cards>.card>.content>.header:not(.ui) {
+  font-size: 1.1em;
+}
+
+img {
+  width: 45px !important;
+  height: 45px !important;
+  box-shadow: 1px 1px 20px rgba(51, 51, 51, 0.2) !important;
+}
+
+.border-current {
+  padding: 1px !important;
+  border: 1px solid #00a65a !important;
+}
+
+.ui.card .meta,
+.ui.cards>.card .meta {
+  font-size: .9em;
+  color: rgba(0, 0, 0, .5);
+  margin-top: 5px;
+}
+
+.mar-img {
+  margin: 0 5px 0 0 !important;
+}
+
+.mar-card {
+  margin: 10px !important;
+}

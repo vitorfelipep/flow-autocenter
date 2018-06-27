@@ -1,0 +1,50 @@
+<div class="setting-sidebar">
+  <h4>Configurações</h4>
+
+  <div class="ui clearing divider"></div>
+
+  <div class="area">
+
+    <div class="ui raised cards">
+      <div class="card">
+        <div class="content">
+          <img class="left floated avatar mini ui image border-current" [src]="getFotoUrl(user)">
+          <div class="header">
+            {{ user.nome }}
+          </div>
+          <div class="meta">
+            {{ user.gerencia }}
+          </div>
+          <div class="ui clearing divider"></div>
+          <div class="description">
+            <img class="avatar mini ui image" [src]="getFotoUrl(user)" suiPopup popupInverted popupText="user.nome" popupPlacement="left">
+            <img class="avatar mini ui image" [src]="getFotoUrl(user)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui basic segment">
+      <div class="ui form">
+        <div class="grouped fields">
+          <label>Notificações</label>
+          <div class="field">
+            <sui-checkbox class="toggle">Atraso no planejamento</sui-checkbox>
+          </div>
+          <div class="field">
+            <sui-checkbox class="toggle">Conclusão da demanda</sui-checkbox>
+          </div>
+          <div class="field">
+            <sui-checkbox class="toggle">Solicitação de aprovação</sui-checkbox>
+          </div>
+          <div class="field">
+            <sui-checkbox class="toggle">Comentários na demanda</sui-checkbox>
+          </div>
+          <div class="field">
+            <sui-checkbox class="toggle">Comentários na atividade</sui-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
