@@ -1,0 +1,36 @@
+img {
+  width: 100px;
+  padding: 10px;
+}
+
+h3 {
+    padding: 8px 0 0 10px;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 4px #000;
+}
+
+.ui.menu {
+  font-size: 0.8rem;
+}
+
+.ui.vertical.menu {
+  width: 13rem;
+}
+
+.menu-sidebar {
+  height: 100%;
+  border: 0 solid transparent;
+  background: #404142;
+  color: #DFDFDF;
+  box-shadow: none;
+}
+
+.title-sidebar {
+  margin: 10px 0 10px 5px;
+}
+
+.ui.styled.accordion,
+.ui.styled.accordion .accordion {
+  background: #333435;
+  border-radius: 0;
+}

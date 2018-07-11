@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,13 +54,13 @@ public class Funcionario implements Serializable {
 	private Boolean ativo;
 	
 	@NotNull
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "funcionario_especialidade", joinColumns = @JoinColumn(name = "id_funcionario", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "id_especialidade", referencedColumnName = "id"))
 	private List<Especialidade> especialidades;
 	
 	@NotNull
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "id_funcao", referencedColumnName="id")
 	private Funcao funcao;
 

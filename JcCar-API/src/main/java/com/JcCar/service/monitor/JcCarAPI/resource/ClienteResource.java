@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.JcCar.service.monitor.JcCarAPI.domain.Cliente;
+import com.JcCar.service.monitor.JcCarAPI.domain.ClienteCarro;
 import com.JcCar.service.monitor.JcCarAPI.event.RecursoCriadoEvent;
 import com.JcCar.service.monitor.JcCarAPI.service.ClienteService;
 
@@ -78,17 +79,17 @@ public class ClienteResource implements Serializable{
 		return cliente.isPresent() ? ResponseEntity.ok().body(cliente.get()) : ResponseEntity.notFound().build();
 	}
 	
-	@ApiOperation(value = "Create a new customer", httpMethod = "POST", nickname = "createCustomer")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully created application"),
+	@ApiOperation(value = "Create a new CustomerAndYourCar", httpMethod = "POST", nickname = "createCustomerAndYourCar")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully created CustomerAndYourCar"),
 			@ApiResponse(code = 401, message = "You are not authorized to view the resource"),
 			@ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
 			@ApiResponse(code = 404, message = "The resource you were trying to reach is not found") })
 	@PostMapping
-	public ResponseEntity<Cliente> create(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
-		log.debug("REST request to save Alert : {}", cliente);
-		Cliente clientSaved = clienteService.save(cliente);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, clientSaved.getId()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(clientSaved);
+	public ResponseEntity<ClienteCarro> create(@Valid @RequestBody ClienteCarro clienteCarro, HttpServletResponse response) {
+		log.debug("REST request to save Client and Your Car : {}", clienteCarro);
+		ClienteCarro clientCarSaved = clienteService.save(clienteCarro);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, clientCarSaved.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(clientCarSaved);
 	}
 	
 	@ApiOperation(value = "Update a existing customer", httpMethod = "PUT", nickname = "updateCustomer")

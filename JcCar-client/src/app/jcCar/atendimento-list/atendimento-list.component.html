@@ -1,0 +1,110 @@
+<breadcrumb [breadcrumbs]="breadcrumb"></breadcrumb>
+
+<div class="ui raised segments mar-t-5">
+  <div class="ui grey segment">
+    <div class="ui grid stackable">
+      <div class="six wide column">
+        <h3 class="ui header">
+          Meus Serviços
+        </h3>
+      </div>
+      <div class="ten wide column right aligned">
+        <button type="submit" class="ui button mini btn-main" (click)="onAddCustomeService()" suiPopup
+          popupInverted popupText="Adicionar novo Atendimento">
+          <i class="fa fa-plus pad-r-5"></i> Adicionar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui ">
+    <p-pickList [source]="sourceCars" [target]="targetCars" sourceHeader="Em Espera"
+      targetHeader="Em Manutenção" [responsive]="true" filterBy="cliente"
+      dragdrop="false" dragdropScope="null" sourceFilterPlaceholder="Pesquisar por cliente"
+      targetFilterPlaceholder="Pesquisar por cliente" [sourceStyle]="{'height':'500px'}"
+      [showSourceControls]="false" [showTargetControls]="false"
+      [targetStyle]="{'height':'500px'}"
+      [metaKeySelection]="true" (onSourceSelect)="onSourceSelect($event)">
+      <ng-template let-atendimento pTemplate="item">
+        <!-- <div class="ui-helper-clearfix"> -->
+            <div class="ui divided items">
+                <div class="item" [ngStyle]="onItemDisabled(atendimento)" >
+                  <div class="ui small image img-width" [ngClass]="onSetStyleImprov(atendimento)">
+                    <img src="../../../assets/img/cars/{{atendimento.car.brand}}.png">
+                  </div>
+                  <div class="middle aligned content">
+                    <div class="header"
+                      suiPopup popupInverted popupText="Mecânico responsavel: {{ atendimento.mecanico }}">
+                      Cliente: {{ atendimento.cliente.name }}
+                      <div class="meta">
+                        <span>
+                          {{ atendimento.tipoAtendimento }}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="description">
+                      <p *ngIf="atendimento.descricaoCasoTipoServicoOutros"
+                        class="text-overflow-200"
+                        suiPopup popupInverted popupText="{{  atendimento.descricaoCasoTipoServicoOutros }}">
+                        {{ atendimento.descricaoCasoTipoServicoOutros }}
+                      </p>
+                    </div>
+                    <div class="extra" *ngIf="atendimento.tiposDeServicoRealizados && atendimento.tiposDeServicoRealizados.length > 0">
+                      <div class="ui tag labels" suiPopup popupInverted popupText="Status: {{ atendimento.statusAtendimento }}" >
+                        <a class="ui label" *ngFor="let tipoServico of atendimento.tiposDeServicoRealizados, let i = index">
+                          {{tipoServico}}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        <!-- <div class="ui-helper-clearfix">
+            <img src="../../../assets/img/cars/{{atendimento.car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px" width="48"
+            suiPopup popupInverted popupText="Status do Atendimento: {{ atendimento.statusAtendimento }}">
+            <div style="font-size:14px;float:right;margin:15px 5px 0 0"
+            suiPopup popupInverted popupText="Mecânico responsavel: {{ atendimento.mecanico }}">
+              {{atendimento.car.year}} - {{atendimento.car.color}}
+            </div>
+            <div style="font-size:14px;">
+              Cliente: {{atendimento.cliente}}
+            </div> -->
+          <!-- </div> -->
+        </ng-template>
+    </p-pickList>
+  </div>
+</div>
+<!-- <script>
+  $( document ).ready(function() {
+    $('button[ng-reflect-icon=fa-angle-double-right]').css('display', 'none');
+  });
+</script> -->
+
+<ng-template let-context let-modal="modal" #modalCustomerService>
+    <div class="header">Atendimento</div>
+    <div class="content">
+      <form #formCustomerService="ngForm" class="ui form">
+          <div class="image content">
+              <div class="ui medium image" style="float: left;width: 17%;">
+                <img src="../../../assets/img/cars/{{selectedService.car.brand}}.png">
+              </div>
+              <div class="description">
+                <div class="ui header">Default Profile Image</div>
+                <p>We've found the following <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your e-mail address.</p>
+                <p>Deseja iniciar o atendimento do cliente: {{ selectedService.cliente.name }} ?</p>
+              </div>
+            </div>
+      </form>
+      <div class="actions" style="margin-top: 60px;">
+        <div class="ui segment shadow-2 mar-b-10">
+          <button type="button" class="ui button mini btn-green" title="Cancelar" (click)="modal.deny('deny')">
+            <i class="fa fa-undo pad-r-5"></i> Cancelar
+
+          </button>
+          <button type="submit" class="ui button mini btn-main" title="Atender o cliente" (click)="onAttendCustomeService(modal);">
+            <i class="fa fa-save pad-r-5"></i> Atender
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+

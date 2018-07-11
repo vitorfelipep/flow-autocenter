@@ -1,0 +1,112 @@
+<div class="ui segment shadow-2 mar-b-10">
+  <div class="ui raised very padded text container segment">
+    <!-- <a class="ui teal ribbon label m-b-ribbon-15 m-l-ribbon-3">Conclusão</a> -->
+    <h2 class="ui header">
+      <i class="travel icon"></i>
+      <div class="content">
+        Alerta {{ alert.id }} - Concluído
+        <div class="ui vertical animated button btn-green" tabindex="0" (click)="onOpenRelAlert()">
+            <div class="hidden content content-layout">
+              <span suiPopup popupInverted popupText="Vizualizar o relatório padrão do Alerta - (NP-1)" >
+                <i class="fa fa-info-circle"></i>
+                Alerta
+              </span>
+            </div>
+            <div class="visible content">
+              <i class="fa fa-info-circle"></i>
+            </div>
+          </div>
+        <div class="sub header">{{ alert.codigo ? 'O alerta ' + alert.codigo + ',' : '' }}
+          <b>{{ alert.title }}</b>
+        </div>
+
+      </div>
+
+    </h2>
+
+    <!-- <div class="six field">
+      <label style="margin-top: 20px"></label>
+
+    </div> -->
+    <p-fieldset legend="Observações">
+      <p>O Alerta para a empresa {{ alertInvolved.company }} foi concluído com sucesso!</p>
+      Você aprovou os seguintes itens do envolvido:
+      <div class="ui list">
+        <div class="item"><b>{{ alert.title }}</b></div>
+        <div class="item"><b>Classificação do Alerta:</b> {{ getAlertClassification() }}</div>
+        <div class="item"><b>Temporalidade:</b> {{ getTemporality() }}</div>
+        <div class="item"><b>Abrangência:</b> {{ getComprehensiveness() }}</div>
+        <div class="item"><b>Justificativa:</b> {{ getJustificationForNotApplicable() }}</div>
+        <div class="item"><b>Data de registro:</b> {{ alertInvolved.registeredDate | date: 'dd/MM/yyyy' }}</div>
+        <div class="item" *ngIf="alertInvolved.responsedDate"><b>Data de resposta:</b> {{ alertInvolved.responsedDate | date: 'dd/MM/yyyy' }}</div>
+      </div>
+    </p-fieldset>
+    <P></P>
+    <P></P>
+    <p-fieldset legend="Plano de Ações Avaliados" *ngIf="alertInvolved.actionsPlans && alertInvolved.actionsPlans.length > 0">
+      <p-dataView #dv [value]="alertInvolved.actionsPlans">
+
+        <ng-template let-action pTemplate="listItem">
+          <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+            <div class="ui-g-12 ui-md-3" style="text-align:center">
+              <i class="fa fa-user fa-3x"></i><br>
+              <span>{{ action.createdBy }}</span>
+            </div>
+            <div class="ui-g-12 ui-md-8 car-details">
+              <div class="ui-g">
+                <div class="ui-g-4 ui-sm-6">Causa Raiz: </div>
+                <div class="ui-g-6 ui-sm-6">
+                  <b>{{ action.rootCause }}</b>
+                </div>
+
+                <div class="ui-g-4 ui-sm-6">Plano de ação: </div>
+                <div class="ui-g-6 ui-sm-6">
+                  <b>{{ action.description }}</b>
+                </div>
+
+                <div class="ui-g-4 ui-sm-6">Criação: </div>
+                <div class="ui-g-6 ui-sm-6">
+                  <b>{{ action.creationDate | date: 'dd/MM/yyyy'}}</b>
+                </div>
+
+                <div class="ui-g-4 ui-sm-6">Dt Final: </div>
+                <div class="ui-g-6 ui-sm-6">
+                  <b>{{ action.endDate | date: 'dd/MM/yyyy'}}</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </p-fieldset>
+  </div>
+</div>
+
+<ng-template let-context let-modal="modal" #modalReportAlertConclused id="modalReportAlertConclused">
+    <div class="header">
+        <a class="ui blue ribbon label m-b-ribbon-15 m-l-ribbon-2">Informações do registro do Alerta SMS (PP-1PBR-00150-0)</a>
+    </div>
+    <div class="content">
+        <div class="ui grid">
+          <div class="four wide column">
+            <img src="../../../../../../assets/img/petro_logo.png" class="img-opacity">
+          </div>
+          <div class="nine wide column">
+            <p class="cab-report-first"><b class="color-header-report">PP-0V3-00031</b></p>
+            <p class="cab-report-second"><b class="color-header-report">Anexo N - Alerta de SMS</b></p>
+          </div>
+          <div class="two wide column">
+            <a class="ui blue circular label NP">NP-1</a>
+          </div>
+        </div>
+      <app-report-alert [alert]="alert" [alertInvolved]="alertInvolved" [formAlert]="formAlert" ></app-report-alert>
+      <p></p>
+      <div class="actions">
+        <div class="ui segment shadow-2 mar-b-10">
+          <button type="button" class="ui button mini btn-green" title="Imprimir" (click)="print(modalReportAlert)">
+            <i class="print icon pad-r-5"></i> Imprimir
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>

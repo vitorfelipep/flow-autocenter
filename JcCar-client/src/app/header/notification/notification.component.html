@@ -1,0 +1,19 @@
+<div class="notification-sidebar">
+  <h4>Notificações
+    <div class="ui red circular mini label" *ngIf="notificationList.length > 0">{{ notificationList.length }}</div>
+  </h4>
+
+  <div class="ui clearing divider"></div>
+
+  <div class="area">
+    <div class="ui relaxed selection animated divided list">
+      <div class="item" *ngFor="let notification of notificationList">
+        <i class="middle folder open middle aligned icon" [ngClass]="{ 'outline': !notification.lido }" ></i>
+        <div class="content">
+          <span class="ui header" [ngClass]="{ 'disabled': notification.lido }" >{{ notification.mensagem }}</span>
+          <div class="description">{{ notification.dataAviso }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="ui segment shadow-2 mar-b-10">
+  <div class="ui feed segment">
+    <div style="border-left: 3px solid #DDDDDD;margin-left: 50%;">
+      <div class="content" style="margin-left: -5%; margin-bottom: 10px;">
+        <div class="label" suiPopup popupInverted popupText="Data de resposta ao alerta: {{ alertInvolved.responsedDate | date: 'dd/MM/yyyy' }}">
+          <a class="ui basic label">
+            {{ alertInvolved.responsedDate | date: 'dd/MM/yyyy' }}
+          </a>
+        </div>
+      </div>
+      <div *ngFor="let chat of listChatEvaluation; let i = index">
+        <div class="event event-margin" [ngClass]="getClassEvent(chat)">
+          <a  [ngClass]="getClassTag(chat)" >
+            <div class="label">
+
+            </div>
+            <div class="content">
+              <div class="summary">
+                Empresa: {{ alertInvolved.company }}
+                <span suiPopup popupInverted popupText="{{ getDiffDays() > 0 ? 'Há ' + getDiffDays() + ' atrás' : getDiffDays()}}">
+                </span>
+                  <div class="date">
+                    {{ getDiffDays(i, chat) }}
+                  </div>
+              </div>
+              <div class="extra text">
+                Abrangência: {{ alertInvolved.comprehensiveness === false ? 'Não Abrangente' : 'Abrangente' }}
+                <div class="message-size">
+                  <span suiPopup popupInverted popupText="{{ chat.message ? chat.message : ''}}">
+                    <p>Resposta:
+                        {{ chat.message ? chat.message : '' }}
+                    </p>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+          <div class="actions-involved" *ngIf="isReplyChat(i) && isInvolved(chat, i)">
+            <a class="reply"  (click)="onClickEvaluation(chat, i);">Responder</a>
+          </div>
+          <div class="actions-appraiser" *ngIf="isReplyChat(i) && isAppraiser(chat) ">
+            <a class="reply"  (click)="onClickEvaluation(chat, i);"> Responder/Avaliar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template let-context let-modal="modal" #modalNotComprehesive>
+    <div class="header">Avaliação da não abrangência</div>
+    <div class="content">
+      <form #chatEvaluationForm="ngForm" class="ui form">
+        <div class="ui segment shadow-2 mar-b-10">
+          <div class="fields">
+            <div class="eight wide field">
+              <label>De:</label>
+              <input-user name="chatEvaluationComprehensive.sender" [(chaveUser)]="chatEvaluationComprehensive.sender"></input-user>
+            </div>
+            <div class="eight wide field">
+              <label>Para:</label>
+              <input-user name="chatEvaluationComprehensive.receiver" [(chaveUser)]="chatEvaluationComprehensive.receiver"></input-user>
+            </div>
+          </div>
+
+          <div class="field required" *ngIf="isAppraiserToEvaluation(chatEvaluationComprehensive)"> <!-- *ngIf="userLogin.company === 'PETROBRAS'" -->
+            <label suiPopup popupInverted popupText="Aprovar ou reprovar abrangência">Aprovar:</label>
+            <sui-checkbox class="toggle" [(ngModel)]="comprehensiveEvaluation.rated" (checkChange)="checkChangeEvaluetion()"
+              name="effective"> {{ textRated }}
+            </sui-checkbox>
+          </div>
+
+          <div class="field required" [ngClass]="{'error': messageChat.invalid && (messageChat.touched || chatEvaluationForm.submitted )}">
+            <label suiPopup popupInverted popupText="Mensagem">Mensagem: </label>
+            <textarea name="messageChat" rows="3" maxlength="2000" placeholder="Neste campo, insira uma breve descrição do evento utilizando redação simples e linguagem de fácil entendimento."
+              required [(ngModel)]="chatEvaluationComprehensive.message" #messageChat="ngModel" [disabled]="isDisabledJustification"></textarea>
+            <small class="helper" *ngIf="messageChat.hasError('required') && (messageChat.touched || chatEvaluationForm.submitted )">O campo é obrigatório.</small>
+          </div>
+        </div>
+      </form>
+      <div class="actions">
+        <div class="ui segment shadow-2 mar-b-10">
+          <button type="button" class="ui button mini btn-green" title="Cancelar" (click)="modal.deny('deny')">
+            <i class="fa fa-undo pad-r-5"></i> Cancelar
+          </button>
+
+          <button type="submit" class="ui button mini btn-main" title="Responder"
+            *ngIf="!isAppraiser(chatEvaluationComprehensive)"
+            (click)="respChat(modal)" [disabled]="!chatEvaluationForm.form.valid">
+            <i class="fa fa-save pad-r-5"></i> Responder
+          </button>
+
+          <button type="submit" class="ui button mini btn-main" title="Avaliar este alerta"
+            (click)="onEndAlert(modal)" [disabled]="!chatEvaluationForm.form.valid"
+            *ngIf="isAppraiserToEvaluation(chatEvaluationComprehensive)">
+            <i class="fa fa-check pad-r-5"></i> Avaliar
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

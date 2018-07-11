@@ -6,8 +6,8 @@ package com.JcCar.service.monitor.JcCarAPI.domain;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +27,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "fabricante")
 @Getter @Setter
-@EqualsAndHashCode(exclude = {"nome", "modelosCarros"})
+@EqualsAndHashCode(exclude = {"nome", "carros"})
 public class Fabricante implements Serializable {
 
 	private static final long serialVersionUID = -7887960716512342170L;
@@ -39,6 +39,6 @@ public class Fabricante implements Serializable {
 	@NotEmpty
 	private String nome;
 	
-	@OneToMany(mappedBy = "fabricante", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
-	private List<ModeloCarro> modelosCarros;
+	@OneToMany(mappedBy = "fabricante", fetch=FetchType.LAZY)
+	private List<Carro> carros;
 }

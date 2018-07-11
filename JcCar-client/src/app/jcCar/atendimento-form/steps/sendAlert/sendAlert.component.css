@@ -1,0 +1,27 @@
+.m-b-ribbon-15 {
+    margin-bottom: 15px !important;
+}
+
+.m-l-ribbon-3 {
+    margin-left: 3px !important;
+}
+
+.al {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.al-work-permission {
+    background-image: src('../../../../assets/img/permissaoTrabalho.jpg');
+    max-width:150px;
+    max-height:80px;
+    width: auto;
+    height: auto;
+}
+
+li > .ui-autocomplete-input-token:has(input) {
+    border: none !important;
+}

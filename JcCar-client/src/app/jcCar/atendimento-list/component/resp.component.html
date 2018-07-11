@@ -1,0 +1,6 @@
+<span suiPopup popupInverted popupText="{{ getToolTypeForAnswer() }}">
+    <a [ngClass]="getClassToAlertForOkOrNotOk()" >
+      <i class="fa pad-r-5" [ngClass]="getClassToAlertViewed()" ></i>
+      {{ getMessageAboutInvolved() }}
+    </a>
+</span>

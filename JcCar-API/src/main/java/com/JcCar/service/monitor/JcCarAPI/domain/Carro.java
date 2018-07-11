@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,9 +29,9 @@ import lombok.Setter;
  */
 
 @Entity
-@Table(name = "cliente")
+@Table(name = "carro")
 @Getter @Setter
-@EqualsAndHashCode(exclude = {"placa", "dono", "modeloCarro"})
+@EqualsAndHashCode(exclude = {"versao", "motor","modeloCarro", "fabricante"})
 public class Carro implements Serializable {
 
 	private static final long serialVersionUID = 5545984033781194299L;
@@ -42,19 +41,20 @@ public class Carro implements Serializable {
 	private Long id;
 	
 	@NotEmpty
+	private String versao;
+	
 	@NotEmpty
-	private String placa;
+	private String motor;
 	
 	@NotNull
-	@ManyToOne( cascade = { CascadeType.PERSIST } , fetch= FetchType.EAGER)
-	@JoinColumn(name = "id_cliente", referencedColumnName="id")
-    @JsonBackReference
-	private Cliente dono;
-	
-	@NotNull
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "id_modelo")
 	private ModeloCarro modeloCarro;
 	
+	@NotNull
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "id_fabricante", referencedColumnName="id")
+    @JsonBackReference
+	private Fabricante fabricante;
 	
 }

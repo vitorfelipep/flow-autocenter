@@ -1,0 +1,25 @@
+<div class="ui grid">
+    <div class="four wide column">
+    <div class="ui icon input ">
+      <input name="chaveUser" #chave placeholder="Chave" type="text" [(ngModel)]="chaveUser" 
+        (blur)="getUser(chave.value)" (keyup.enter)="getUser(chave.value)">
+      <i class="search icon" (click)="getUser(chave.value)" style="cursor: pointer;" ></i>
+    </div>
+  </div>
+ 
+  <div class="twelve wide column ">
+    <div class="ui comments">
+      <div class="comment">
+        <a class="avatar" [style.float]=" user.employeeId ? 'left' : 'none'">
+          <img [src]="getFotoUrl(user.company, user.employeeId)">
+        </a>
+        <div class="content">
+          <a class="author">{{ user.employeeName }}</a>
+          <div class="text">
+            {{ user.department }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>

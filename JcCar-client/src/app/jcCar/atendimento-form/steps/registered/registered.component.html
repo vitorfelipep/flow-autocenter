@@ -1,0 +1,164 @@
+<div class="ui segment shadow-2 mar-b-10">
+  <a class="ui teal ribbon label m-b-ribbon-15 m-l-ribbon-3">Dados básicos do Atendimento</a>
+  <!-- <i class="al al-work-permission"></i> Teste -->
+  <div class="fields">
+    <div class="ten wide field required" [ngClass]="{'error': titleAtendimentoName.invalid && (titleAtendimentoName.touched || formAtendimento.submitted )}">
+      <label>Título</label>
+      <input type="text" name="titleAtendimentoName" [(ngModel)]="atendimento.titulo" placeholder="Título do atendimentoa" required minlength="4"
+        maxlength="255" #titleAtendimentoName="ngModel">
+      <small class="helper" *ngIf="titleAtendimentoName.hasError('required') && (titleAtendimentoName.touched || formAtendimento.submitted )">O campo é obrigatório.</small>
+      <small class="helper" *ngIf="titleAtendimentoName.hasError('minlength') && (titleAtendimentoName.touched || formAtendimento.submitted )">O valor mínimo é 4 caracteres.</small>
+    </div>
+
+    <div class="six wide field">
+      <label>Cliente</label>
+      <input-user name="user" [(chaveUser)]="atendimento.cliente.nome" ></input-user>
+    </div>
+  </div>
+
+  <div class="fields">
+    <div class="eight wide field required" [ngClass]="{'error': tipoAtendimentoId.invalid && (tipoAtendimentoId.touched || formAtendimento.submitted )}">
+      <label>Tipo de Atendimento:</label>
+      <sui-select class="selection" name="tipoAtendimentoId" placeholder="Selecione 1 tipo de atendimento"  #tipoAtendimentoId="ngModel" required
+        [isSearchable]="true" [(ngModel)]="atendimento.tipoAtendimento" labelField="description" [options]="tiposAtendimento"
+        [optionTemplate]="optionAtendimentoTipo" #optionsTipoAtendimento>
+        <sui-select-option *ngFor="let tipoAtendimento of optionsTipoAtendimento.filteredOptions" [value]="tipoAtendimento">
+        </sui-select-option>
+        <ng-template let-atendimentoTipo #optionAtendimentoTipo>
+            {{ atendimentoTipo.descricao }}
+        </ng-template>
+      </sui-select>
+      <small class="helper" *ngIf="tipoAtendimentoId.hasError('required') && (tipoAtendimentoId.touched || formAtendimento.submitted )">O campo é obrigatório.</small>
+    </div>
+
+    <div class="eight wide field required" [ngClass]="{'error': seviceAutoId.invalid && (seviceAutoId.touched || formAtendimento.submitted )}">
+      <label>Serviços de manutenção: </label>
+      <sui-multi-select class="selection" name="seviceAutoId" placeholder="Selecione uma ou mais regras de ouro" required 
+        #seviceAutoId="ngModel" [isSearchable]="true" [(ngModel)]="atendimento.servicosAutomotivos" 
+        [options]="serviceAutoList" [optionTemplate]="optionServiceAuto" labelField="name" #selectServicoAuto>
+        <sui-select-option *ngFor="let serviceAuto of selectServicoAuto.filteredOptions" [value]="serviceAuto">
+        </sui-select-option>
+        <ng-template let-serviceAuto #optionServiceAuto>
+          <i class="fa fa-exclamation-circle pad-r-5"></i>
+          <span suiPopup popupInverted popupText="{{ serviceAuto.descricao }}">{{ serviceAuto.nome }}</span>
+        </ng-template>
+      </sui-multi-select>
+      <small class="helper" *ngIf="seviceAutoId.hasError('required') && (seviceAutoId.touched || formAlert.submitted )">O campo é obrigatório.</small>
+    </div>
+  </div>
+
+  <div class="fields">
+    <div class="eight wide field" [ngClass]="{'error': originId.invalid && (originId.touched || formAtendimento.submitted )}">
+      <label>Mecânico:</label>
+      <sui-select class="selection" name="originId" placeholder="Selecione 1 mecânico disponivel" labelField="description" required
+        #originId="ngModel" [isSearchable]="true" [(ngModel)]="atendimento.mecanico" [options]="mecanicoList" [optionTemplate]="optionOrigins"
+        (selectedOptionChange)="onSelectMecanico($event)" #selectMecanico>
+        <sui-select-option *ngFor="let origin of selectMecanico.filteredOptions" [value]="origin">
+        </sui-select-option>
+        <ng-template let-origin #optionOrigins>
+          <i class="fa fa-bell pad-r-5"></i>
+          <span suiPopup popupInverted popupText="{{ origin.description }}">{{ origin.name }}</span>
+        </ng-template>
+      </sui-select>
+      <small class="helper" *ngIf="originId.hasError('required') && (originId.touched || formAtendimento.submitted )">O campo é obrigatório.</small>
+    </div>
+
+    <div class="eight w-50 field required" >
+      <label>Data Início</label>
+      <div class="ui left icon input">
+        <i class="calendar icon"></i>
+        <p-calendar name="dataInicio" #dataInicio="ngModel" [(ngModel)]="atendimento.creationDate" [locale]="calendar_lang" showIcon="true"
+          dateFormat="dd/mm/yy" showButtonBar="true"  [maxDate]="atendimento.endDate" readonlyInput="true" ></p-calendar>
+      </div>
+      <!-- <small class="helper" *ngIf="dataInicio && dataInicio.hasError('required') && (dataInicio.touched || formAlert.submitted )">Campo obrigatório.</small> -->
+    </div>
+
+    <div class="eight w-50 field required" style="margin-left: 45px;" >
+      <label>Data Fim</label>
+      <div class="ui left icon input">
+        <i class="calendar icon"></i>
+        <p-calendar name="dataFim" #dataFim="ngModel" [(ngModel)]="atendimento.endDate" [locale]="calendar_lang" showButtonBar="true"
+          showIcon="true" dateFormat="dd/mm/yy" [minDate]="atendimento.creationDate"  readonlyInput="true" ></p-calendar>
+      </div>
+      <!-- <small class="helper" *ngIf="dataFim && dataFim.hasError('required') && (dataFim.touched || formAlert.submitted )">Campo obrigatório.</small> -->
+    </div>
+  </div>
+
+  <div class="field required" [ngClass]="{'error': description.invalid && (description.touched || formAtendimento.submitted )}">
+    <label>Descrição do tipo de serviço, caso, outros:</label>
+    <textarea name="description" rows="3" placeholder="Neste campo, insira uma breve descrição do evento utilizando redação simples e linguagem de fácil entendimento."
+      required [(ngModel)]="atendimento.tiposDeServicoRealizados" #description="ngModel" maxlength="1000"></textarea>
+    <small class="helper" *ngIf="description.hasError('required') && (description.touched || formAtendimento.submitted )">O campo é obrigatório.</small>
+  </div>
+
+  <div class="ui center aligned basic segment">
+    <div class="ui inverted divider"></div>
+    <div class="two wide field" style="margin-left:45%">
+      <button type="button" class="ui button small btn-green fluid" suiPopup popupInverted popupText="Adicionar plano de ação a tabela"
+      (click)="onAddCarCustomer()">
+      <i class="right fa fa-arrow-down"></i> Adicionar Carros?</button>
+    </div>
+  </div>
+
+<div class="ui segment shadow-2 mar-b-10" *ngIf="this.atendimento.carros && this.atendimento.carros.length > 0">
+  <a class="ui teal ribbon label">Carro do cliente</a>
+  <div class="fields">
+    <div class="sixteen wide field h-scroll mar-t-10">
+      <p-dataTable [value]="atendimento.carros" [reorderableColumns]="true" [responsive]="true" rowHover="true">
+        <p-column field="id" header="#" [style]="{'width':'60px', 'text-align': 'center'}">
+          <ng-template pTemplate="body" let-col let-id="rowData">
+            <span suiPopup popupInverted popupText="{{ id[col.field] ? 'Código do plano de ação: ' + id[col.field] : 'Plano de ação não salvo!' }}">
+                {{ id[col.field] ? id[col.field] : '#' }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="placa" header="Placa do veiculo" [style]="{'white-space':'nowrap', 'overflow':'hidden', 'text-overflow': 'ellipsis', 'width': '400px'}">
+          <ng-template pTemplate="body" let-col let-description="rowData">
+            <span suiPopup popupInverted popupText="{{ description[col.field] }}">{{ description[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="dono.nome" header="Dono do veiculo" [style]="{'white-space':'nowrap', 'overflow':'hidden', 'text-overflow': 'ellipsis', 'width': '200px'}">
+          <ng-template pTemplate="body" let-col let-causaRaiz="rowData">
+            <span  suiPopup popupInverted popupText="{{ causaRaiz[col.field] }}">{{ causaRaiz[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="modeloCarro.nome" header="Modelo do carro" [style]="{'width':'120px'}">
+          <ng-template pTemplate="body" let-col let-nomeModelo="rowData">
+            <span class="label-nomeModelo span-nomeModelo" >
+              {{ nomeModelo[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="modeloCarro.versao" header="Versão">
+          <ng-template pTemplate="body" let-col let-versao="rowData">
+            <span suiPopup popupInverted popupText="{{ versao[col.field] }}">
+              {{ versao[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="modeloCarro.motor" header="Motor">
+          <ng-template pTemplate="body" let-col let-motor="rowData">
+            <span suiPopup popupInverted popupText="{{ motor[col.field] }}">
+              {{ motor[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="modeloCarro.fabricante.nome" header="Fabricante/Marca">
+          <ng-template pTemplate="body" let-col let-marca="rowData">
+            <span suiPopup popupInverted popupText="{{ marca[col.field] }}">
+              {{ marca[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column header="Ações" styleClass="col-button" [style]="{'width':'90px'}">
+          <ng-template let-selected="rowData" pTemplate="body">
+            <div class="center-text">
+              <button type="button" class="ui button small btn-clean" suiPopup popupInverted popupText="Editar" (click)="onEditCar(selected)">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button type="button" class="ui button small btn-clean" suiPopup popupInverted popupText="Excluir" (click)="onRemoveCar(selected)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</div>
+

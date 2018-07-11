@@ -1,0 +1,118 @@
+.m-b-ribbon-15 {
+  margin-bottom: 15px !important;
+}
+
+.m-l-ribbon-3 {
+  margin-left: 3px !important;
+}
+
+.w-25 {
+  width: 25% !important;
+}
+
+.ui-calendar.ui-calendar-w-btn input {
+  width: 25% !important;
+}
+
+.float-r {
+  float: right;
+}
+
+.header-text-center {
+  text-align: center;
+}
+
+.small-col-8 {
+ width: 80px !important;
+}
+
+.big-text-col {
+  white-space:"nowrap";
+  overflow: "hidden";
+  text-overflow: 'ellipsis';
+}
+
+.mar-t-10 {
+  margin-top: 10px !important;
+}
+
+.label-status {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+
+.span-status {
+    display: block;
+    font-size: 95%;
+    width: 100%;
+    height: 90%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding-top: 6px;
+    font-weight: 200;
+}
+
+.approved-action-plan {
+  background-color: #2c6116 !important;
+}
+
+.not-approved {
+  background-color: #f39c12 !important;
+}
+
+.disapproved-action-plan {
+  background-color: #bb2516 !important;
+}
+
+.m-b-ribbon-15 {
+  margin-bottom: 15px !important;
+}
+
+.m-l-ribbon-3 {
+  margin-left: 3px !important;
+}
+
+img {
+width: 180px;
+}
+
+.border {
+border: 1px solid #fefefefe;
+}
+
+.title-report {
+font-size: 2.0em;
+font-family: Arial, Helvetica, sans-serif;
+font-stretch: condensed;
+margin-top: 2px;
+text-align: center;
+color: red;
+}
+
+.cab-report {
+margin-top: 10px !important;
+text-align: center;
+}
+
+.text-j {
+text-align: justify;
+}
+
+.text-desc {
+font-size: 1.4em;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.cod-m-top {
+margin-top: 10px;
+}
+

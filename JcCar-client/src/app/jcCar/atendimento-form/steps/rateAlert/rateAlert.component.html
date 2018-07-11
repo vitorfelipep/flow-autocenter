@@ -1,0 +1,103 @@
+<div class="ui segment shadow-2 mar-b-10">
+  <a class="ui teal ribbon label m-b-ribbon-15 m-l-ribbon-3">Avaliar Alerta</a>
+
+  <div class="fields">
+    <div class="ten wide field required" [ngClass]="{'error': empresa.invalid && (empresa.touched || formAlert.submitted )}">
+      <label suiPopup popupInverted popupText="Minha Empresa: {{ alertInvolved.company }}">Empresa:</label>
+      <input type="text" name="empresa" [(ngModel)]="alertInvolved.company" required [disabled]="true" #empresa="ngModel">
+      <small class="helper" *ngIf="empresa.hasError('required') && (empresa.touched || formAlert.submitted )">O campo é obrigatório.</small>
+      <small class="helper" *ngIf="empresa.hasError('minlength') && (empresa.touched || formAlert.submitted )">O valor mínimo é 4 caracteres.</small>
+    </div>
+
+    <div class="six field">
+      <label style="margin-top: 20px"></label>
+      <div class="ui vertical animated button btn-green" tabindex="0" style="width: 170%;"
+        (click)="onOpenRelAlert()">
+        <div class="hidden content content-layout">
+          <span suiPopup popupInverted popupText="Vizualizar o relatório padrão do Alerta - (NP-1)" >
+            <i class="fa fa-info-circle"></i>
+            Alerta
+          </span>
+        </div>
+        <div class="visible content">
+          <i class="fa fa-info-circle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ten wide field required" [ngClass]="{'error': title.invalid && (title.touched || formAlert.submitted )}">
+    <label suiPopup popupInverted popupText="Descrição: {{ alert.description }}">Assunto:</label>
+    <input type="text" name="title" [(ngModel)]="alert.title" required [disabled]="true" #title="ngModel">
+    <small class="helper" *ngIf="title.hasError('required') && (title.touched || formAlert.submitted )">O campo é obrigatório.</small>
+    <small class="helper" *ngIf="title.hasError('minlength') && (title.touched || formAlert.submitted )">O valor mínimo é 4 caracteres.</small>
+  </div>
+
+  <div class="field required" *ngIf="isNotClassificationYellow() === true">
+    <label suiPopup popupInverted popupText="{{ getInfComprehensiveness() }}">Abrangente?</label>
+    <sui-checkbox class="toggle" [(ngModel)]="alertInvolved.comprehensiveness" [isDisabled]="isNotInvolved()"
+      (checkChange)="checkChangeComprehensiveness($event)">{{ getLabelComprehensiveness() }}
+    </sui-checkbox>
+  </div>
+
+  <div class="field required" *ngIf="isNotClassificationYellow() === true"
+    [ngClass]="{'error': descriptionForNotApplicable.invalid && (descriptionForNotApplicable.touched || formAlert.submitted )}">
+    <label suiPopup popupInverted popupText="Caso não abrangente">Justificativa?</label>
+    <textarea name="descriptionForNotApplicable" rows="3" placeholder="Neste campo, insira uma breve descrição do evento utilizando redação simples e linguagem de fácil entendimento."
+      required [(ngModel)]="alertInvolved.justificationForNotApplicable" #descriptionForNotApplicable="ngModel" [disabled]="isDisabledJustification"></textarea>
+    <small class="helper" *ngIf="descriptionForNotApplicable.hasError('required') && (descriptionForNotApplicable.touched || formAlert.submitted )">O campo é obrigatório.</small>
+  </div>
+
+  <!-- <div class="eight wide field">
+    <label>Anexos:</label>
+    <p-fileUpload mode="basic" name="attachmentsForNotApplicable[]" chooseLabel="Upload de arquivo" maxFileSize="1000000" (onUpload)="onAttachmentsUploadInvolved($event)"
+      uto="true"></p-fileUpload>
+  </div> -->
+  <div class="field" *ngIf="this.alert.attachments && this.alert.attachments.length > 0">
+      <label suiPopup popupInverted popupText="Anexos do alerta">Anexos:</label>
+      <p-dataTable [value]="this.alert.attachments" [reorderableColumns]="true" [responsive]="true" rowHover="true">
+        <p-column field="description" header="Descrição"></p-column>
+        <p-column field="name" header="Nome do Arquivo"></p-column>
+        <p-column field="name" header="Anexo"></p-column>
+
+        <p-column styleClass="col-button" header="Ações" [style]="{'width':'80px'}">
+          <ng-template let-selected="rowData" pTemplate="body">
+            <div class="center-text">
+              <button type="button" class="ui button small btn-clean" (click)="downloadAttachment(selected)" suiPopup popupInverted popupText="DownLoad">
+                <i class="fa fa-download"></i>
+              </button>
+            </div>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+    </div>
+</div>
+
+<ng-template let-context let-modal="modal" #modalReportAlert id="modalReportAlert">
+  <div class="header">
+      <a class="ui blue ribbon label m-b-ribbon-15 m-l-ribbon-2">Informações do registro do Alerta SMS (PP-1PBR-00150-0)</a>
+  </div>
+  <div class="content">
+      <div class="ui grid">
+        <div class="four wide column">
+          <img src="../../../../../../assets/img/petro_logo.png" class="img-opacity">
+        </div>
+        <div class="nine wide column">
+          <p class="cab-report-first"><b class="color-header-report">PP-0V3-00031</b></p>
+          <p class="cab-report-second"><b class="color-header-report">Anexo N - Alerta de SMS</b></p>
+        </div>
+        <div class="two wide column">
+          <a class="ui blue circular label NP">NP-1</a>
+        </div>
+      </div>
+    <app-report-alert [alert]="alert" [alertInvolved]="alertInvolved" [formAlert]="formAlert"></app-report-alert>
+    <p></p>
+    <div class="actions">
+      <div class="ui segment shadow-2 mar-b-10">
+        <button type="button" class="ui button mini btn-green" title="Imprimir" (click)="print(modalReportAlert)">
+          <i class="print icon pad-r-5"></i> Imprimir
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

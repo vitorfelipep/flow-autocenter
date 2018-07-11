@@ -1,0 +1,7 @@
+{
+    "/gdsm": {
+      "context": "/JcCar-api",
+      "target": "http://localhost:8585",
+      "secure": false
+    }
+  }

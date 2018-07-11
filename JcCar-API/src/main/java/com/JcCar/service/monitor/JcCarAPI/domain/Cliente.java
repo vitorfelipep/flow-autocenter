@@ -27,7 +27,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "cliente")
 @Getter @Setter
-@EqualsAndHashCode(exclude = {"nome", "carros"})
+@EqualsAndHashCode(exclude = {"nome", "clinteCarros"})
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1742253286664425784L;
@@ -39,6 +39,6 @@ public class Cliente implements Serializable {
 	@NotEmpty
 	private String nome;
 	
-	@OneToMany(mappedBy = "dono", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE })
-	private List<Carro> carros;
+	@OneToMany(mappedBy = "dono", cascade={ CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+	private List<ClienteCarro> clinteCarros;
 }

@@ -1,0 +1,9 @@
+
+<div *ngIf="isComprehensiveness()">
+  <action-plan-list [formAlert]="formAlert" [alertInvolved]="alertInvolved" [userLogin]="userLogin"></action-plan-list>
+</div>
+
+<div *ngIf="isNonComprehensive()">
+  <not-comprehensive [formAlert]="formAlert" [alertInvolved]="alertInvolved" [userLogin]="userLogin"
+    [alert]="alert"></not-comprehensive>
+</div>

@@ -1,0 +1,57 @@
+.m-b-ribbon-15 {
+  margin-bottom: 15px !important;
+}
+
+.m-l-ribbon-3 {
+  margin-left: 3px !important;
+}
+
+.w-25 {
+  width: 25% !important;
+}
+
+.ui-calendar.ui-calendar-w-btn input {
+  width: 25% !important;
+}
+
+.float-r {
+  float: right;
+}
+
+.header-text-center {
+  text-align: center;
+}
+
+.small-col-8 {
+ width: 80px !important;
+}
+
+.big-text-col {
+  white-space:"nowrap";
+  overflow: "hidden";
+  text-overflow: 'ellipsis';
+}
+
+.mar-t-10 {
+  margin-top: 10px !important;
+}
+
+.approved {
+  color: #317873 !important;
+}
+
+.desapproved {
+  color: #db2828 !important;
+}
+
+/* .positonModal {
+  font-size: 1rem;
+  margin-top: 10% !important;
+  width: 80%;
+} */
+
+.ui.active.modal {
+  margin-top: 10% !important;
+  margin-left: 10% !important;
+  width: 80% !important;
+}

@@ -1,0 +1,28 @@
+h4 {
+  padding: 8px 0 0 10px;
+  margin-bottom: 0;
+}
+
+.notification-sidebar {
+  width: 300px;
+  height: 100%;
+  border: 0 solid transparent;
+  background: #FFF;
+  color: #333;
+  box-shadow: none;
+}
+
+.notification-sidebar>.area {
+  padding: 5px 10px;
+}
+
+.ui.list .list>.item .header,
+.ui.list>.item .header {
+  font-size: 13px;
+}
+
+.ui.list .list>.item .description,
+.ui.list>.item .description {
+  font-size: 11px;
+  margin-top: 2px;
+}

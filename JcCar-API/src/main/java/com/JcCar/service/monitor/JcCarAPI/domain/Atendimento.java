@@ -75,6 +75,11 @@ public class Atendimento implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TipoAtendimentoEnum tipoAtendimento;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "atendimento_servico_automotivo", joinColumns = @JoinColumn(name = "id_atendimento",referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "id_servico_auto", referencedColumnName = "id"))
+	private List<ServicoAutomotivo> servicosAutomotivos;
+	
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private StatusAtendimentoEnum statusAtendimento;
@@ -89,7 +94,7 @@ public class Atendimento implements Serializable {
 	@Column(name = "outros_servicos")
 	private String descricaoCasoTipoServicoOutros;
 	
-	@ManyToOne(fetch= FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "id_servico", referencedColumnName="id")
     @JsonBackReference
 	private Servico servico;

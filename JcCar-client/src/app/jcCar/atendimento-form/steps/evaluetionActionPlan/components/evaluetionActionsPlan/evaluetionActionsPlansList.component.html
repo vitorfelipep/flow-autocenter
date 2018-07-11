@@ -1,0 +1,105 @@
+<div class="ui segment shadow-2 mar-b-10">
+  <a class="ui teal ribbon label" style="margin-left: 3px;">
+    <i class="fa fa-check"></i> Avaliação dos planos de ações da {{ alertInvolved.company.toUpperCase() }}</a>
+  <div class="fields">
+    <div class="sixteen wide field h-scroll mar-t-10">
+      <p-dataTable [value]="alertInvolved.actionsPlans" [reorderableColumns]="true" [responsive]="true" rowHover="true"
+        selectionMode="single"  (onRowSelect)="onSelectActionPlan($event.data)"
+        dataKey="id">
+        <p-column field="status" header="Ação" [style]="{'width':'80px','text-align': 'center'}">
+          <ng-template pTemplate="body" let-col let-status="rowData">
+            <span suiPopup popupInverted popupText="{{ getLabelStatusEnum(status[col.field]) }}">
+              <i class="{{ getIconForEvaluetionActionPlan(status[col.field]) }}"></i>
+            </span>
+          </ng-template>
+        </p-column>
+        <p-column field="description" header="Descrição" [style]="{'white-space':'nowrap', 'overflow':'hidden', 'text-overflow': 'ellipsis', 'width': '400px'}">
+          <ng-template pTemplate="body" let-col let-description="rowData">
+            <span suiPopup popupInverted popupText="{{ description[col.field] }}">{{ description[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="rootCause" header="Causa Raiz" [style]="{'white-space':'nowrap', 'overflow':'hidden', 'text-overflow': 'ellipsis', 'width': '200px'}">
+          <ng-template pTemplate="body" let-col let-causaRaiz="rowData">
+            <span suiPopup popupInverted popupText="{{ causaRaiz[col.field] }}">{{ causaRaiz[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="createdBy" header="Responsável" [style]="{'width':'120px'}">
+          <ng-template pTemplate="body" let-col let-createdBy="rowData">
+            <span suiPopup popupInverted popupText="{{ createdBy[col.field] }}">
+              {{ createdBy[col.field] }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="creationDate" header="Data Início">
+          <ng-template pTemplate="body" let-col let-creationDate="rowData">
+            <span suiPopup popupInverted popupText="{{ creationDate[col.field] | date: 'dd/MM/yyyy' }}">
+              {{ creationDate[col.field] | date: 'dd/MM/yyyy' }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="endDate" header="Data Fim">
+          <ng-template pTemplate="body" let-col let-endDate="rowData">
+            <span suiPopup popupInverted popupText="{{ endDate[col.field] | date: 'dd/MM/yyyy' }}">
+              {{ endDate[col.field] | date: 'dd/MM/yyyy' }}</span>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+    </div>
+  </div>
+
+  <ng-template let-context let-modal="modal" #modalEvaluetion>
+    <div class="header">Avaliação do plano de ação</div>
+    <div class="content">
+      <form #formEvaluetionService="ngForm" class="ui form">
+        <div class="ui segment shadow-2 mar-b-10">
+          <div class="fields">
+            <div class="eight wide field">
+              <label>Avaliado por:</label>
+              <input-user name="evaluationEffectivenessActionPlan.measurer" [(chaveUser)]="evaluationEffectivenessActionPlan.measurer" ></input-user>
+            </div>
+            <div class="eight w-25 field required" [ngClass]="{'error': dateEvaluetionActionPlan.invalid && (dateEvaluetionActionPlan.touched || formEvaluetionService.submitted )}">
+                <label>Data e Hora:</label>
+                <div class="ui left icon input">
+                  <i class="calendar icon"></i>
+                  <p-calendar name="dateEvaluetionActionPlan" #dateEvaluetionActionPlan="ngModel" [(ngModel)]="evaluationEffectivenessActionPlan.dateOfEvaluetion"
+                    [locale]="calendar_lang" dateFormat="dd/mm/yy" showButtonBar="true" showIcon="true"  readonlyInput="true" ></p-calendar>
+                </div>
+                <small class="helper" *ngIf="dateEvaluetionActionPlan && dateEvaluetionActionPlan.hasError('required') && (dateEvaluetionActionPlan.touched || formEvaluetionService.submitted )">Campo obrigatório.</small>
+            </div>
+          </div>
+
+          <div class="fields" >
+            <div class="eight wide field required">
+                <label>Avaliação:</label>
+                <sui-checkbox class="toggle" [(ngModel)]="evaluationEffectivenessActionPlan.effective"
+                    (checkChange)="checkChangeEvaluetion()" name="effective">{{ labelEvaluetion }}
+                </sui-checkbox>
+            </div>
+
+            <!-- <div class="eight wide field">
+                <label>Anexo:</label>
+                <p-fileUpload mode="basic" name="attachmentsEvaluationAcionPlan[]"
+                chooseLabel="Upload de arquivo" maxFileSize="1000000" (onUpload)="onAttachmentsUploadInvolved($event)"
+                uto="true"></p-fileUpload>
+            </div> -->
+          </div>
+
+          <div class="field" [ngClass]="{'error': justificationEvaluetion.invalid && (justificationEvaluetion.touched || formEvaluetionService.submitted )}">
+            <label suiPopup popupInverted popupText="Caso não abrangente" >Justificativa da Avaliação</label>
+            <textarea name="justificationEvaluetion" rows="3" placeholder="Neste campo, insira uma breve descrição do evento utilizando redação simples e linguagem de fácil entendimento."
+                required [(ngModel)]="evaluationEffectivenessActionPlan.justification" #justificationEvaluetion="ngModel" [disabled]="isDisabledJustification"></textarea>
+            <small class="helper" *ngIf="justificationEvaluetion.hasError('required') && (justificationEvaluetion.touched || formEvaluetionService.submitted )">O campo é obrigatório.</small>
+          </div>
+        </div>
+      </form>
+      <div class="actions">
+        <div class="ui segment shadow-2 mar-b-10">
+          <button type="button" class="ui button mini btn-green" title="Cancelar" (click)="modal.deny('deny')">
+            <i class="fa fa-undo pad-r-5"></i> Cancelar
+          </button>
+          <button type="submit" class="ui button mini btn-main" title="Salvar" (click)="onSaveEvaluetionActionPlan(modal)" [disabled]="!formEvaluetionService.form.valid">
+            <i class="fa fa-save pad-r-5"></i> Salvar Resposta
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

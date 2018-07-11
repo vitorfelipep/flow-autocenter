@@ -1,0 +1,75 @@
+<div class="ui segment shadow-2 mar-b-10">
+    <div class="ui grid border">
+      <div class="five wide column">
+        <img src="../../../../../../assets/img/petro_logo.png">
+      </div>
+      <div class="seven wide column">
+        <h2 class="cab-report">{{ alert.temporality.id === 1 ? 'ALERTA PRELIMINAR DE SMS' : 'ALERTA DE SMS' }}</h2>
+      </div>
+      <div class="four wide column cod-m-top">
+        <h2>N°: {{ alert.codigo }}</h2>
+      </div>
+    </div>
+
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <h3 class="title-report">{{ alert.title }}</h3>
+      </div>
+    </div>
+
+    <div class="ui grid">
+      <div class="sixteen wide column">
+        <h3>O QUE ACONTECEU:</h3>
+        <span suiPopup popupInverted popupText="{{ alert.description }}">
+        </span>
+        <p class="text-j text-desc">{{ alert.description }}</p>
+      </div>
+    </div>
+
+    <div class="ui grid" *ngIf="isAlertDefinitive()">
+      <div class="eight wide column">
+        <h3>PORQUE ACONTECEU:</h3>
+        <p class="text-j text-desc"><span suiPopup popupInverted popupText="{{ alert.basicCause }}">{{ alert.basicCause }}</span></p>
+      </div>
+
+      <div class="eight wide column">
+        <h3>FOTOS:</h3>
+        <p-galleria [images]="images" panelWidth="420" panelHeight="289" showCaption="true"></p-galleria>
+      </div>
+    </div>
+
+    <div class="ui grid" *ngIf="isAlertDefinitive()">
+      <div class="sixteen wide column">
+        <h3>O QUE DEVEMOS FAZER PARA EVITAR:</h3>
+        <p class="text-j text-desc"><span suiPopup popupInverted popupText="{{ alert.actionPlain }}">{{ alert.actionPlain }}</span></p>
+      </div>
+    </div>
+
+    <div class="ui grid" *ngIf="isAlertDefinitive()">
+      <div class="sixteen wide column">
+        <h3>Regra de Ouro Aplicada:</h3>
+        <div class="ui bulleted list" *ngFor="let goldRole of alert.goldRoles; let i = index ">
+          <div class="item text-desc">{{ goldRole.description }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui grid border" *ngIf="isAlertDefinitive()">
+      <div class="eight wide column">
+        <b>Data da ocorrência:</b> {{ alert.creationDate | date: 'dd/MM/yyyy' }}<br>
+        <b>Data de emissão:</b> {{ alert.sendDate | date: 'dd/MM/yyyy' }}
+      </div>
+      <div class="eight wide column">
+          <b>Palavra Chave: </b>
+        <div class="ui horizontal list">
+          <div class="item" *ngFor="let tag of alert.tags; let i = index ">
+            <div class="content">
+              <div class="header">
+                <i class="ui hashtag icon" ></i>
+                {{ tag }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

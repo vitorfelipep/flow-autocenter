@@ -1,0 +1,79 @@
+<div class="ui grid">
+    <div class="ten wide column bottom aligned" style="margin-bottom: 5px;">
+      <breadcrumb [breadcrumbs]="breadcrumb"></breadcrumb>
+    </div>
+    <div class="six wide column right aligned">
+
+      <button type="button" class="ui button mini btn-green" (click)="onCancel()" suiPopup popupInverted popupText="Voltar">
+        <i class="fa fa-undo pad-r-5"></i> Voltar
+      </button>
+
+      <button type="button"  class="ui button mini red"
+        suiPopup popupInverted popupText="Remover Alerta">
+        <i class="fa fa-trash pad-r-5"></i> Remover
+      </button>
+
+      <button type="submit" class="ui button mini btn-main" (click)="onSave(formAtendimento)"
+        suiPopup popupInverted popupText="Salvar">
+        <i class="fa fa-save pad-r-5"></i> Salvar
+      </button>
+
+      <button type="button" class="ui button mini btn-main" (click)="onNextStep(formAtendimento)" suiPopup popupInverted popupText="Avançar para próxima etapa"
+        [disabled]="buttonNextStepDisable === true">
+        <i class="fa fa-chevron-right pad-r-5"></i> Próxima Etapa
+      </button>
+    </div>
+  </div>
+
+  <form #formAtendimento="ngForm" class="ui tiny form" (ngSubmit)="onSave(formAtendimento)">
+    <div class="ui segment">
+      <sui-tabset>
+        <div class="ui mini attached steps">
+          <a class="step" suiTabHeader="1" [isActive]="firstActive" [isDisabled]="!firstActive">
+            <i class="desktop icon"></i>
+            <div class="content">
+              <div class="title">Registrar Atendimento</div>
+              <div class="description">Dados do Atendimento</div>
+            </div>
+          </a>
+          <a class="step" suiTabHeader="2" [isActive]="secondActive" [isDisabled]="!secondActive">
+            <i class="tasks icon"></i>
+            <div class="content">
+              <div class="title">Em Espera</div>
+              <div class="description">Aguardando atendimento</div>
+            </div>
+          </a>
+          <a class="step" suiTabHeader="3" [isActive]="thirdActive" [isDisabled]="!thirdActive">
+            <i class="check circle outline icon"></i>
+            <div class="content">
+              <div class="title">Em Serviço
+                <div class="description">Serviço em andamento</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="step" suiTabHeader="4" [isActive]="fourthActive" [isDisabled]="!fourthActive">
+            <i class="travel icon"></i>
+            <div class="content">
+              <div class="title">Concluído</div>
+              <div class="description">Atendimento Concluído</div>
+            </div>
+          </a>
+        </div>
+        <!-- begin Views Components of segment -->
+        <div class="ui bottom attached segment bg-white" suiTabContent="1">
+          <registered [atendimento]="atendimento" [formAtendimento]="formAtendimento" ></registered>
+        </div>
+
+        <div class="ui bottom attached segment bg-white" suiTabContent="2">
+        </div>
+
+        <div class="ui bottom attached segment bg-white" suiTabContent="3">
+        </div>
+
+        <div class="ui bottom attached segment bg-white" suiTabContent="4">
+        </div>
+        <!-- end Views Components of segment -->
+      </sui-tabset>
+    </div>
+  </form>

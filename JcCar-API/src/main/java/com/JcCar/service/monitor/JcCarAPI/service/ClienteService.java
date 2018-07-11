@@ -16,6 +16,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.JcCar.service.monitor.JcCarAPI.domain.Cliente;
+import com.JcCar.service.monitor.JcCarAPI.domain.ClienteCarro;
+import com.JcCar.service.monitor.JcCarAPI.repository.ClienteCarroRepository;
 import com.JcCar.service.monitor.JcCarAPI.repository.ClienteRepository;
 import com.JcCar.service.monitor.JcCarAPI.service.exception.ExistingClientWithSameNameException;
 
@@ -32,6 +34,9 @@ public class ClienteService implements Serializable {
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private ClienteCarroRepository clienteCarroRepository;
 
 	/**
 	 * @return
@@ -52,18 +57,18 @@ public class ClienteService implements Serializable {
 	 * @param cliente
 	 * @return
 	 */
-	public Cliente save(@Valid Cliente cliente) {
+	public ClienteCarro save(@Valid ClienteCarro cliente) {
 		ClienteAlreadyExistent(cliente);
-		return clienteRepository.save(cliente);
+		return clienteCarroRepository.save(cliente);
 	}
 	
 	/**
 	 * @param alert
 	 */
-	private void ClienteAlreadyExistent(Cliente cliente) {
-		Optional<Cliente> clienteOpcional = clienteRepository.findByNomeIgnoreCase(cliente.getNome());
-		if(clienteOpcional.isPresent()) {
-			throw new ExistingClientWithSameNameException("Já existe cliente com este nome, por favor adicione um novo cliente!");
+	private void ClienteAlreadyExistent(ClienteCarro cliente) {
+		Optional<ClienteCarro> clienteCarroOpcional = clienteCarroRepository.findByPlacaIgnoreCase(cliente.getPlaca());
+		if(clienteCarroOpcional.isPresent()) {
+			throw new ExistingClientWithSameNameException("Já existe carro com esta placa, por favor adicione um novo carro para o cliente!");
 		}
 	}
 

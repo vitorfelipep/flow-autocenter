@@ -1,0 +1,53 @@
+.ui.card>.content>.header:not(.ui),
+.ui.cards>.card>.content>.header:not(.ui) {
+    font-size: 12px !important;
+}
+
+.ui.card>.content,
+.ui.cards>.card>.content {
+    padding: 10px 10px 5px !important;
+}
+
+/* .column {
+    width: 24% !important;
+} */
+
+img {
+    width: 45px !important;
+    height: 45px !important;
+    box-shadow: 1px 1px 20px rgba(51, 51, 51, 0.2) !important;
+}
+
+.border-current {
+    padding: 1px !important;
+    border: 1px solid #00a65a !important;
+}
+
+.ui.card .meta,
+.ui.cards>.card .meta {
+    font-size: .9em;
+    color: rgba(0, 0, 0, .5);
+    margin-top: 5px;
+}
+
+.mar-img {
+    margin: 0 5px 5px 0 !important;
+}
+
+.mar-card {
+    margin: 10px !important;
+}
+
+.description {
+    font-size: 0.8em !important;
+    color: rgb(0, 0, 0, 0.85) !important;
+    font-weight: 600 !important;
+}
+
+.col-not-correct {
+  color: #be3333;
+}
+
+.col-is-correct {
+    color: #2a9d68;
+}

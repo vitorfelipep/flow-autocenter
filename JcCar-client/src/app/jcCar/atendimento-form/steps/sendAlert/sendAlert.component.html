@@ -1,0 +1,100 @@
+<div class="ui segment shadow-2 mar-b-10">
+  <a class="ui teal ribbon label m-b-ribbon-15 m-l-ribbon-3">Enviar Notificação do Alerta</a>
+
+  <div class="ten wide field required" [ngClass]="{'error': keyEmployeeTo.invalid && (keyEmployeeTo.touched || formAlert.submitted )}">
+    <label>Para:</label>
+    <span class="ui-fluid">
+      <p-autoComplete [(ngModel)]="emailRequest.to" [suggestions]="filteredUseMultiple" (completeMethod)="filterinvolvedsMultiple($event)"
+        styleClass="wid100" [minLength]="1" placeholder="Employees to" field="employeeKey" [multiple]="true" name="keyEmployeeTo"
+        [forceSelection]="true" (onSelect)="onSelectTo($event)" (onUnselect)="onUnselectEvent($event)" #keyEmployeeTo="ngModel">
+      </p-autoComplete>
+    </span>
+    <small class="helper" *ngIf="keyEmployeeTo.hasError('required') && (keyEmployeeTo.touched || formAlert.submitted )">O campo é obrigatório.</small>
+    <small class="helper" *ngIf="keyEmployeeTo.hasError('minlength') && (keyEmployeeTo.touched || formAlert.submitted )">O valor mínimo é 4 caracteres.</small>
+  </div>
+
+  <div class="ten wide field required" [ngClass]="{'error': keyEmployeeCC.invalid && (keyEmployeeCC.touched || formAlert.submitted )}">
+    <label>CC:</label>
+    <span class="ui-fluid">
+      <p-autoComplete [(ngModel)]="emailRequest.cc" [suggestions]="filteredUseMultiple" (completeMethod)="filterinvolvedsMultiple($event)"
+        styleClass="wid100" [minLength]="1" placeholder="Employees cc" field="employeeKey" [multiple]="true" name="keyEmployeeCC"
+        #keyEmployeeCC="ngModel">
+      </p-autoComplete>
+    </span>
+    <small class="helper" *ngIf="keyEmployeeCC.hasError('required') && (keyEmployeeCC.touched || formAlert.submitted )">O campo é obrigatório.</small>
+    <small class="helper" *ngIf="keyEmployeeCC.hasError('minlength') && (keyEmployeeCC.touched || formAlert.submitted )">O valor mínimo é 4 caracteres.</small>
+  </div>
+
+  <div class="fields">
+    <div class="ten wide field required" [ngClass]="{'error': assunto.invalid && (assunto.touched || formAlert.submitted )}">
+      <label>Assunto:</label>
+      <input type="text" name="assunto" [(ngModel)]="emailRequest.subject" placeholder="Título do alerta" required minlength="4"
+        #assunto="ngModel">
+      <small class="helper" *ngIf="assunto.hasError('required') && (assunto.touched || formAlert.submitted )">O campo é obrigatório.</small>
+      <small class="helper" *ngIf="assunto.hasError('minlength') && (assunto.touched || formAlert.submitted )">O valor mínimo é 4 caracteres.</small>
+    </div>
+    <div class="six field" *ngIf="alert.attachments && alert.attachments.length > 0">
+      <label style="margin-top: 20px"></label>
+      <div class="ui vertical animated button btn-green" tabindex="0" style="width: 170%;" (click)="onOpenTableAttachment()">
+        <div class="hidden content content-layout">
+          <span suiPopup popupInverted popupText="Vizualizar anexos">
+            <i class="fa fa-info-circle"></i>
+            Anexos
+          </span>
+        </div>
+        <div class="visible content">
+          <i class="fa fa-info-circle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="field required" [ngClass]="{'error': mensagem.invalid && (mensagem.touched || formAlert.submitted )}">
+    <label>Mensagem:</label>
+    <p-editor name="mensagem" placeholder="Descrição do projeto" required #mensagem="ngModel" #textDescricao [(ngModel)]="emailRequest.message"
+      [style]="{'height':'150px'}">
+      <p-header>
+        <span class="ql-formats">
+          <select class="ql-size">
+            <option value="small">Pequeno</option>
+            <option selected></option>
+            <option value="large">Grande</option>
+            <option value="huge">Bruto</option>
+          </select>
+        </span>
+        <span class="ql-formats">
+          <button class="ql-bold" aria-label="Bold"></button>
+          <button class="ql-italic" aria-label="Italic"></button>
+          <button class="ql-underline" aria-label="Underline"></button>
+          <button class="ql-strike" aria-label="Strike"></button>
+        </span>
+      </p-header>
+    </p-editor>
+    <small class="helper" *ngIf="mensagem.hasError('required') && (mensagem.touched || formAlert.submitted )">Campo obrigatório.</small>
+  </div>
+</div>
+
+<ng-template let-context let-modal="modal" #modalAttachment id="modalAttachment">
+  <div class="header">
+    <a class="ui blue ribbon label m-b-ribbon-15 m-l-ribbon-2">Anexos</a>
+  </div>
+  <div class="content">
+    <div class="field" *ngIf="this.alert.attachments && this.alert.attachments.length > 0">
+      <p-dataTable [value]="this.alert.attachments" [reorderableColumns]="true" [responsive]="true" rowHover="true">
+        <p-column field="description" header="Descrição"></p-column>
+        <p-column field="name" header="Nome do Arquivo"></p-column>
+        <p-column field="name" header="Anexo"></p-column>
+        <!-- <p-column styleClass="col-button" header="Ações" [style]="{'width':'80px'}">
+          <ng-template let-selected="rowData" pTemplate="body">
+            <div class="center-text">
+              <button type="button" class="ui button small btn-clean" (click)="downloadAttachment(selected)" suiPopup popupInverted popupText="DownLoad">
+                <i class="fa fa-download"></i>
+              </button>
+            </div>
+          </ng-template>
+        </p-column> -->
+      </p-dataTable>
+    </div>
+  </div>
+</ng-template>
